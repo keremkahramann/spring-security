@@ -6,33 +6,35 @@ import com.security.BasicAuth.service.UserService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.Set;
 
 @SpringBootApplication
 public class BasicAuthApplication {
-/*
+
 	private final UserService userService;
+	private final BCryptPasswordEncoder passwordEncoder;
 
-    public BasicAuthApplication(UserService userService) {
+    public BasicAuthApplication(UserService userService, BCryptPasswordEncoder passwordEncoder) {
         this.userService = userService;
-    }*/
-
+        this.passwordEncoder = passwordEncoder;
+    }
 
     public static void main(String[] args) {
 		SpringApplication.run(BasicAuthApplication.class, args);
 	}
-/*
-	@Override
-	public void run(String... args) throws Exception {
 
+
+	public void run(String... args) throws Exception {
+		createDummyData();
 	}
 
-	private void CreateDummyData(){
+	private void createDummyData(){
 		CreateUserRequest request = CreateUserRequest.builder()
 				.name("ker")
 				.username("kar")
-				.password("kerkar")
+				.password(passwordEncoder.encode("admin"))
 				.authorities(Set.of(Role.ROLE_USER))
 				.build();
 
@@ -40,11 +42,11 @@ public class BasicAuthApplication {
 
 		CreateUserRequest request2 = CreateUserRequest.builder()
 				.name("seda")
-				.username("kera")
-				.password("sedakera")
+				.username("admin")
+				.password("admin")
 				.authorities(Set.of(Role.ROLE_ADMIN))
 				.build();
 
 		userService.createUser(request2);
-	}*/
+	}
 }
