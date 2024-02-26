@@ -28,17 +28,17 @@ public class SecurityConfig {
                 .csrf(x -> x.ignoringRequestMatchers(mvcRequestBuilder.pattern("/public/**"))
                         .ignoringRequestMatchers(PathRequest.toH2Console()))
                 .authorizeHttpRequests(x ->
-
                         x.requestMatchers(mvcRequestBuilder.pattern("/public/**")).permitAll()
-                        .requestMatchers(mvcRequestBuilder.pattern("/private/**")).hasAnyRole(Role.ROLE_USER.getValue(),
-                                    Role.ROLE_ADMIN.getValue(),
-                                    Role.ROLE_MOD.getValue())
                         .requestMatchers(mvcRequestBuilder.pattern("/private/admin/**")).hasAnyRole(Role.ROLE_ADMIN.getValue())
+                        .requestMatchers(mvcRequestBuilder.pattern("/private/**")).hasAnyRole(Role.ROLE_USER.getValue(),
+                                Role.ROLE_ADMIN.getValue(),
+                                Role.ROLE_MOD.getValue())
                         .requestMatchers(PathRequest.toH2Console()).hasRole("ADMIN")
                         .anyRequest().authenticated())
 
                 .formLogin(AbstractHttpConfigurer::disable)
                 .httpBasic(Customizer.withDefaults());
+
         return security.build();
     }
 }

@@ -11,7 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import java.util.Set;
 
 @SpringBootApplication
-public class BasicAuthApplication {
+public class BasicAuthApplication implements CommandLineRunner{
 
 	private final UserService userService;
 	private final BCryptPasswordEncoder passwordEncoder;
@@ -25,7 +25,7 @@ public class BasicAuthApplication {
 		SpringApplication.run(BasicAuthApplication.class, args);
 	}
 
-
+	@Override
 	public void run(String... args) throws Exception {
 		createDummyData();
 	}
@@ -34,7 +34,7 @@ public class BasicAuthApplication {
 		CreateUserRequest request = CreateUserRequest.builder()
 				.name("ker")
 				.username("kar")
-				.password(passwordEncoder.encode("admin"))
+				.password("admin")
 				.authorities(Set.of(Role.ROLE_USER))
 				.build();
 
@@ -48,5 +48,14 @@ public class BasicAuthApplication {
 				.build();
 
 		userService.createUser(request2);
+
+		CreateUserRequest request3 = CreateUserRequest.builder()
+				.name("ilayda")
+				.username("admin1")
+				.password("admin1")
+				.authorities(Set.of(Role.ROLE_MOD))
+				.build();
+
+		userService.createUser(request3);
 	}
 }

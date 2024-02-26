@@ -22,7 +22,7 @@ public class UserService {
         return userRepository.findByUsername(username);
     }
 
-    public User createUser(CreateUserRequest request){
+    public void createUser(CreateUserRequest request){
         User newUser = User.builder()
                 .name(request.name())
                 .username(request.username())
@@ -34,6 +34,6 @@ public class UserService {
                 .accountNonLocked(true)
                 .build();
 
-        return userRepository.save(newUser);
+        userRepository.save(newUser);
     }
 }
